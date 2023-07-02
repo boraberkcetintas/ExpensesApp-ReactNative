@@ -2,6 +2,7 @@ import { StyleSheet, View, Text, Pressable } from "react-native";
 import { GlobalStyles } from "../../constants/styles";
 import { getFormattedDate } from "../../util/date";
 import { useNavigation } from "@react-navigation/native";
+import { memo } from "react";
 
 function ExpenseItem({ id, description, date, amount }) {
   const navigation = useNavigation();
@@ -30,7 +31,7 @@ function ExpenseItem({ id, description, date, amount }) {
   );
 }
 
-export default ExpenseItem;
+export default memo(ExpenseItem);
 
 const styles = StyleSheet.create({
   container: {

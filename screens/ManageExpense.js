@@ -4,10 +4,13 @@ import { useNavigation, useRoute } from "@react-navigation/native";
 import IconButton from "../componenets/UI/IconButton";
 import { GlobalStyles } from "../constants/styles";
 import Button from "../componenets/UI/Button";
+import { useDispatch, useSelector } from "react-redux";
+import { addExpense, deleteExpense, updateExpense } from "../store/expenses";
 
 function ManageExpense() {
   const route = useRoute();
   const navigation = useNavigation();
+  const dispatch = useDispatch();
 
   const editedExpenseId = route.params?.expenseId;
   const isEditing = !!editedExpenseId;
@@ -20,12 +23,31 @@ function ManageExpense() {
 
   function deleteExpenseHandler() {
     navigation.goBack();
+    dispatch(deleteExpense({ id: editedExpenseId }));
   }
   function cancelExpenseHandler() {
     navigation.goBack();
   }
   function confirmExpenseHandler() {
     navigation.goBack();
+    if (isEditing) {
+      dispatch(
+        updateExpense({
+          id: editedExpenseId,
+          description: "Test",
+          amount: 31.99,
+          date: new Date("2023-7-2"),
+        })
+      );
+    } else {
+      dispatch(
+        addExpense({
+          description: "YeniTest",
+          amount: 11.99,
+          date: new Date(),
+        })
+      );
+    }
   }
   return (
     <View style={styles.container}>
